@@ -334,7 +334,7 @@ int main(int argc, char **argv){
   fprintf(stderr," reading...\n");
   g = graph_from_file(stdin);
   fprintf(stderr," random renumbering...\n");
-  random_renumbering(g);
+  //random_renumbering(g);
   fprintf(stderr," %d nodes, %d links.\n",g->n,g->m);
   fflush(stderr);
 
@@ -381,9 +381,11 @@ int main(int argc, char **argv){
     int v, upper_step=0, step=0;
     int lower_bound = 0, new_lower;
     int upper_node, new_upper, upper_bound = g->n, *t;
+    struct timeval start, end;
     sorted_nodes = sort_nodes_by_degrees(g);
     printf("#1:i=iteration_number #2:i-th_lower_node #3:i-th_upper_node #4:degree_of_i-th_lower_node #5:degree_of_i-th_upper_node #6:i-th_lower_bound #7:i-th_upper_bound #8:i-th_best_lower_bound #9:i-th_best_upper_bound\n");
     while ((step<nb_max) && (upper_bound-lower_bound > precision)) {
+      gettimeofday(&start, NULL);
       /* choose v randomly in the giant component */
       v = random()%g->n;
       while (c[v] != c_giant)
@@ -405,7 +407,9 @@ int main(int argc, char **argv){
       new_upper = tree_max_dist(t,g->n);
       if (new_upper < upper_bound)
         upper_bound = new_upper;
+      gettimeofday(&end, NULL);
       printf("%d %d %d %d %d %d %d %d %d\n",step++,v,upper_node, g->degrees[v], g->degrees[upper_node], new_lower, new_upper, lower_bound, upper_bound);
+      printf("TIME %i\n", (end.tv_sec - start.tv_sec) * 1000 + (end.tv_usec - start.tv_usec) / 1000);
       fflush(stdout);
       free(t);
     }
