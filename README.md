@@ -8,7 +8,10 @@ Note : J'ai évidemment commenté le `random_renumbering` dans `diam.c`
 et j'ai rajouté un bout de code pour évaluer le temps d'exécution à
 chaque itération du double-sweep.
 
-Le scripts mettant approximativement 10/15 minutes à tourner, voici son
+Pour que le script fonctionne, il attend `inet` et `ip` à la racine du projet
+sous ces noms exacts.
+
+Le script mettant approximativement 10/15 minutes à tourner, voici son
 output chez moi :
 
     * Compiling the different binaries
